@@ -1,42 +1,39 @@
-// Exemplo simples de pesquisa com resultados fictícios
-function pesquisar() {
-  const resultadosContainer = document.getElementById("resultados-pesquisa");
-  const termoPesquisa = document.querySelector("input").value.trim();
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
 
-  // Limpa resultados anteriores
-  resultadosContainer.innerHTML = "";
+#resultados-pesquisa {
+    margin-top: 20px;
+}
 
-  if (termoPesquisa === "") {
-      resultadosContainer.innerHTML = "<p>Por favor, digite uma música.</p>";
-      return;
-  }
+.item-resultado {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-  // Dados fictícios para exemplo
-  const dados = [
-      { titulo: "Ao Único", artista: "Corinhos Evangélicos", link: "https://www.cifraclub.com.br/corinhos-evangelicos/ao-nico/imprimir.html#columns=true" },
-      { titulo: "Os Planos de Deus", artista: "Samuel Messias", link: "https://www.cifraclub.com.br/samuel-messias/os-planos-de-deus-barquinho/imprimir.html" },
-      { titulo: "Escudo", artista: "Voz da Verdade", link: "https://www.cifraclub.com.br/voz-da-verdade/escudo/imprimir.html" }
-  ];
+.item-resultado h2 {
+    margin: 0;
+    font-size: 18px;
+}
 
-  // Filtrando resultados com base no termo de pesquisa
-  const resultadosFiltrados = dados.filter(item =>
-      item.titulo.toLowerCase().includes(termoPesquisa.toLowerCase())
-  );
+.item-resultado a {
+    text-decoration: none;
+    color: #4CAF50;
+}
 
-  if (resultadosFiltrados.length === 0) {
-      resultadosContainer.innerHTML = "<p>Nenhuma cifra encontrada.</p>";
-      return;
-  }
+.item-resultado a:hover {
+    text-decoration: underline;
+}
 
-  // Exibindo resultados filtrados
-  resultadosFiltrados.forEach(item => {
-      const div = document.createElement("div");
-      div.className = "item-resultado";
-      div.innerHTML = `
-          <h2><a href="${item.link}" target="_blank">${item.titulo}</a></h2>
-          <p class="descricao-meta">${item.artista}</p>
-          <a href="${item.link}" target="_blank">Mais informações</a>
-      `;
-      resultadosContainer.appendChild(div);
-  });
+.descricao-meta {
+    font-size: 14px;
+    color: #888;
+    margin: 5px 0;
 }

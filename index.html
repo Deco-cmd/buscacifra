@@ -1,58 +1,152 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>SitedoDecao</title>
-</head>
+    <title>Pesquisa de Cifras</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
 
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 50px; /* Distancia o conteúdo principal do topo */
+        }
+
+        #campo-pesquisa {
+            width: 100%;
+            padding: 15px;  /* Aumenta a altura da caixa de pesquisa */
+            font-size: 16px; /* Aumenta o texto da caixa de pesquisa */
+            margin-bottom: 15px; /* Espaço entre a caixa de pesquisa e o botão */
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 15px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #resultados-pesquisa {
+            margin-top: 20px;
+        }
+
+        .item-resultado {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-resultado h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .item-resultado a {
+            text-decoration: none;
+            color: #4CAF50;
+        }
+
+        .item-resultado a:hover {
+            text-decoration: underline;
+        }
+
+        .descricao-meta {
+            font-size: 14px;
+            color: #888;
+            margin: 5px 0;
+        }
+
+        /* Rodapé */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+
+    </style>
+</head>
 <body>
-    <header>
+    <div class="container">
         <h1>Buscar Cifras</h1>
-    </header>
-    <main>
-        <section>
-            <input type="text" placeholder="Digite a musica">
-            <button onclick="pesquisar()">Pesquisar</button>
-        </section>
-        <section class="resultados-pesquisa" id="resultados-pesquisa">
-        </section>
-            <!--<div class="item-resultado">
-                <h2>
-                    <a href="#" target="_blank">Ao Unico</a>
-                </h2>
-                <p class="descricao-meta">Ao Único
-                    Corinhos Evangélicos.</p>
-                <a href="https://www.cifraclub.com.br/corinhos-evangelicos/ao-nico/imprimir.html#columns=true" target="_blank">Mais informações</a>
-                </div>
-            <div class="item-resultado">
-                <h2>
-                    <a href="#" target="_blank">Os Planos de Deus</a>
-                </h2>
-                <p class="descricao-meta">Os Planos de Deus
-                    Samuel Messias.</p>
-                <a href="https://www.cifraclub.com.br/samuel-messias/os-planos-de-deus-barquinho/imprimir.html" target="_blank">Mais informações</a>
-            </div>
-            
-            <div class="item-resultado">
-                <h2>
-                    <a href="#" target="_blank">Escudo</a>
-                </h2>
-                <p class="descricao-meta">Escudo
-                    Voz da Verdade.</p>
-                <a href="https://www.cifraclub.com.br/voz-da-verdade/escudo/imprimir.html" target="_blank">Mais informações</a>
-            </div> -->
-                        
-        
-    </main>
+        <input type="text" id="campo-pesquisa" placeholder="Digite o nome da música">
+        <button onclick="pesquisar()">Pesquisar</button>
+
+        <div id="resultados-pesquisa"></div>
+    </div>
+
     <footer>
         <p>2024 - Cifras DECAO. Todos os direitos reservados</p>
-        <p>Entre em contato pelo email: andrelk1387@gmail.com</p>
+        <p>Entre em contato pelo email: <a href="mailto:andrelk1387@gmail.com">andrelk1387@gmail.com</a></p>
     </footer>
-    <script src="dados.js"></script>
-    <script src="app.js"></script>
-</body>
 
+    <script>
+        // Função de pesquisa
+        function pesquisar() {
+            const resultadosContainer = document.getElementById("resultados-pesquisa");
+            const termoPesquisa = document.getElementById("campo-pesquisa").value.trim();
+
+            // Limpa resultados anteriores
+            resultadosContainer.innerHTML = "";
+
+            if (termoPesquisa === "") {
+                resultadosContainer.innerHTML = "<p>Por favor, digite uma música.</p>";
+                return;
+            }
+
+            // Dados fictícios para exemplo
+            const dados = [
+                { titulo: "Ao Único", artista: "Corinhos Evangélicos", link: "https://www.cifraclub.com.br/corinhos-evangelicos/ao-nico/imprimir.html#columns=true" },
+                { titulo: "Os Planos de Deus", artista: "Samuel Messias", link: "https://www.cifraclub.com.br/samuel-messias/os-planos-de-deus-barquinho/imprimir.html" },
+                { titulo: "Escudo", artista: "Voz da Verdade", link: "https://www.cifraclub.com.br/voz-da-verdade/escudo/imprimir.html" }
+            ];
+
+            // Filtrando resultados com base no termo de pesquisa
+            const resultadosFiltrados = dados.filter(item =>
+                item.titulo.toLowerCase().includes(termoPesquisa.toLowerCase())
+            );
+
+            if (resultadosFiltrados.length === 0) {
+                resultadosContainer.innerHTML = "<p>Nenhuma cifra encontrada.</p>";
+                return;
+            }
+
+            // Exibindo resultados filtrados
+            resultadosFiltrados.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "item-resultado";
+                div.innerHTML = `
+                    <h2><a href="${item.link}" target="_blank">${item.titulo}</a></h2>
+                    <p class="descricao-meta">${item.artista}</p>
+                    <a href="${item.link}" target="_blank">Mais informações</a>
+                `;
+                resultadosContainer.appendChild(div);
+            });
+        }
+    </script>
+</body>
 </html>
