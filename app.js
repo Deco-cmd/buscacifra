@@ -1,37 +1,42 @@
+// Exemplo simples de pesquisa com resultados fictícios
 function pesquisar() {
-//console.log(dados);
-let section = document.getElementById("resultados-pesquisa");
-let  campoPesquisa = document.getElementById("campo-pesquisa");
-if (!campoPesquisa) {
-    section.innerHTML = "<p>Nada foi encontrado. Voçê prescisa digitar o nome da musica"</p
-      return
-}
-campoPesquisa = campoPesquisa.toLowerCase()
+  const resultadosContainer = document.getElementById("resultados-pesquisa");
+  const termoPesquisa = document.querySelector("input").value.trim();
 
-let resultados = "";
-let tom = "";
-let titulo = "";
-let tags = "";
+  // Limpa resultados anteriores
+  resultadosContainer.innerHTML = "";
 
-for (let dado of dados) {
-  titulo = dado.titulo.toLoLowerCase()
-  tom = dado.tom.toLowerCase()
-  tags = dado.tags.toLowerCase()
+  if (termoPesquisa === "") {
+      resultadosContainer.innerHTML = "<p>Por favor, digite uma música.</p>";
+      return;
+  }
 
-if (titulo.includes(campoPesquisa)) || resultados.includes(campoPesquisa)  || tags.includes(campoPesquisa)
+  // Dados fictícios para exemplo
+  const dados = [
+      { titulo: "Ao Único", artista: "Corinhos Evangélicos", link: "https://www.cifraclub.com.br/corinhos-evangelicos/ao-nico/imprimir.html#columns=true" },
+      { titulo: "Os Planos de Deus", artista: "Samuel Messias", link: "https://www.cifraclub.com.br/samuel-messias/os-planos-de-deus-barquinho/imprimir.html" },
+      { titulo: "Escudo", artista: "Voz da Verdade", link: "https://www.cifraclub.com.br/voz-da-verdade/escudo/imprimir.html" }
+  ];
 
-resultados += `
+  // Filtrando resultados com base no termo de pesquisa
+  const resultadosFiltrados = dados.filter(item =>
+      item.titulo.toLowerCase().includes(termoPesquisa.toLowerCase())
+  );
 
-}
-  resultados += `
-    <div class="item-resultado">
-                <h2>
-                    <a href="#" target="_blank">${dado.titulo}</a>
-                </h2>
-                <p class="descricao-meta">${dado.tom}</p>
-                <a href=${dado.link} target="_blank">Mais informações</a>
-    </div>
-    `;
-}
-section.innerHTML = resultados; 
+  if (resultadosFiltrados.length === 0) {
+      resultadosContainer.innerHTML = "<p>Nenhuma cifra encontrada.</p>";
+      return;
+  }
+
+  // Exibindo resultados filtrados
+  resultadosFiltrados.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "item-resultado";
+      div.innerHTML = `
+          <h2><a href="${item.link}" target="_blank">${item.titulo}</a></h2>
+          <p class="descricao-meta">${item.artista}</p>
+          <a href="${item.link}" target="_blank">Mais informações</a>
+      `;
+      resultadosContainer.appendChild(div);
+  });
 }
